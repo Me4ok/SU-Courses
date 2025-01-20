@@ -1,7 +1,7 @@
-.zip
-.png
-.css
-.html
-.docx
-.xlsx
-.ppts
+*.zip
+*.png
+*.css
+*.html
+*.docx
+*.xlsx
+*.ppts
