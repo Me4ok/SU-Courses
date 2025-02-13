@@ -10,7 +10,6 @@ function solution(input) {
     } else if (input == 'downvote') {
         this.downvotes++;
     } else if (input == 'score') {
-        const totalScore = this.upvotes - this.downvotes;
         let upvotesToPrint = this.upvotes;
         let downvotesToPrint = this.downvotes;
         let rating = '';
@@ -21,23 +20,44 @@ function solution(input) {
             downvotesToPrint += obfuscationNum;
         }
 
-        const balance = this.upvotes - this.downvotes;
+        const totalScore = this.upvotes - this.downvotes;
         const totalVotes = this.upvotes + this.downvotes;
         const upvotesPercentage = this.upvotes * 100 / totalVotes;
 
-        if (upvotesPercentage > 66) {
+        // console.log(`this.upvotes => ${this.upvotes}`);
+        // console.log(`this.downvotes => ${this.downvotes}`);
+        // console.log(`balance => ${balance}`);
+        // console.log(`totalVotes => ${totalVotes}`);
+        // console.log(`upvotesPercentage => ${upvotesPercentage}`);
+
+        if (upvotesPercentage > 66 && totalVotes >= 10) {
             rating = 'hot';
-        } else if (balance > 0 && totalVotes > 100) {
+        } else if (upvotesPercentage <= 66 && totalScore >= 0 && totalVotes > 100) {
             rating = 'controversial';
-        } else if (balance < 0) {
-            rating = 'unpopular';
         } else if (totalVotes < 10) {
             rating = 'new';
+        } else if (totalScore < 0) {
+            rating = 'unpopular';
         }
 
-        return [upvotesToPrint, downvotesToPrint, balance, rating];
+        return [upvotesToPrint, downvotesToPrint, totalScore, rating];
     }
 }
+
+
+// // Broken test for 'new'
+// let post = {
+//     id: '1',
+//     author: 'pesho',
+//     content: 'hi guys',
+//     upvotes: 0,
+//     downvotes: 0
+// };
+
+// solution.call(post, 'upvote');
+// score = solution.call(post, 'score');
+// console.log(score);
+
 
 let post = {
     id: '3',
@@ -50,6 +70,8 @@ solution.call(post, 'upvote');
 solution.call(post, 'downvote');
 let score = solution.call(post, 'score'); // [127, 127, 0, 'controversial']
 console.log(score);
-solution.call(post, 'downvote');         // (executed 50 times)
+for (let i = 0; i < 50; i++) {
+    solution.call(post, 'downvote');         // (executed 50 times)    
+}
 score = solution.call(post, 'score');     // [139, 189, -50, 'unpopular']
 console.log(score);
