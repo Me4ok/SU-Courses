@@ -6,3 +6,20 @@
 *.xlsx
 *.ppts
 *.gif
+
+# Ignore compiled test output and coverage reports
+/coverage/
+/mocha-output.log
+
+# Ignore `.nyc_output` if using NYC for test coverage
+/.nyc_output/
+
+# Ignore temporary test files
+/test/temp/
+/test/**/*.log
+
+# Ignore Node.js dependencies and environment files (if not already ignored)
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
